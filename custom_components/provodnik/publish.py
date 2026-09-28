@@ -27,7 +27,7 @@ ALLOWED_EXT = {
 }
 MAX_FILES = 500
 MAX_TOTAL = 12 * 1024 * 1024  # лимит тела запроса HA — 16 МБ, base64 добавляет треть
-KEEP_VERSIONS = 10
+KEEP_VERSIONS = 3  # полная история — в файле проекта Studio на Mac
 
 
 class PublishError(ValueError):

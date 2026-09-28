@@ -9,7 +9,8 @@ WebSocket:
     provodnik/publications/delete        удалить публикацию целиком (администратор)
     provodnik/publications/subscribe     активная версия и её смена (любой пользователь)
 
-Файлы лежат в /config/provodnik/<slug>/<version>/ и попадают в резервные копии.
+Файлы лежат в /config/provodnik/<slug>/<version>/ (3 последние версии) и попадают
+в резервные копии.
 Какая версия активна — в `.storage/provodnik.publications`. Новая версия
 становится активной только после того, как записана целиком.
 """

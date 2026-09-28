@@ -1,0 +1,11 @@
+{
+  "domain": "provodnik",
+  "name": "Provodnik",
+  "version": "1.0.0",
+  "codeowners": [
+    "@TalyRomen"
+  ],
+  "requirements": [],
+  "documentation": "https://github.com/TalyRomen/Provodnik-Studio-HomeAssistant-Integration",
+  "issue_tracker": "https://github.com/TalyRomen/Provodnik-Studio-HomeAssistant-Integration/issues"
+}

@@ -1,5 +1,9 @@
 # Изменения
 
+## 1.1.1
+
+- Иконка интеграции (`brand/icon.png`, `icon@2x.png`) — видна в Home Assistant 2026.x в «Устройствах и службах».
+
 ## 1.1.0
 
 - Приём публикаций из Provodnik Studio: `POST /api/provodnik/publish/<имя>` (только администратор).

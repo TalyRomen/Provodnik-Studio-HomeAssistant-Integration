@@ -1,4 +1,4 @@
-"""Константы интеграции Dash Builder."""
+"""Константы интеграции Provodnik."""
 
 DOMAIN = "provodnik"
 
@@ -7,3 +7,6 @@ STORAGE_KEY = "provodnik.memory"
 
 # Версия схемы хранимого объекта. Меняется, только если меняется структура.
 STORAGE_VERSION = 1
+
+# Реестр публикаций Studio: .storage/provodnik.publications
+PUBLICATIONS_KEY = "provodnik.publications"

@@ -1,0 +1,13 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Provodnik",
+        "description": "Принимает дашборды, опубликованные из Provodnik Studio, и открывает их по адресу /provodnik/<имя>/."
+      }
+    },
+    "abort": {
+      "single_instance_allowed": "Provodnik уже установлен."
+    }
+  }
+}

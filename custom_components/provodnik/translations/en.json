@@ -1,0 +1,13 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Provodnik",
+        "description": "Receives dashboards published from Provodnik Studio and serves them at /provodnik/<name>/."
+      }
+    },
+    "abort": {
+      "single_instance_allowed": "Provodnik is already set up."
+    }
+  }
+}

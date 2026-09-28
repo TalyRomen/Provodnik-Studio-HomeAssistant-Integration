@@ -1,4 +1,7 @@
-"""Dash Builder — общая память конструктора дашбордов.
+"""Provodnik — публикации дашбордов из Studio и общая память конструктора.
+
+Публикации (приём сборок из Provodnik Studio, версии, откат) — publications.py.
+Ниже — общая память прежнего веб-конструктора, оставлена без изменений.
 
 Заменяет скрытые панели Lovelace: настройки дашборда (блоки, страницы, пресеты,
 фон) хранятся в собственном файле `.storage/provodnik.memory` и попадают в
@@ -26,10 +29,15 @@ from typing import Any
 import voluptuous as vol
 
 from homeassistant.components import websocket_api
+from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.storage import Store
 
 from .const import DOMAIN, STORAGE_KEY, STORAGE_VERSION
+from .publications import async_setup_publications
+
+# Подключается через «Добавить интеграцию» или строкой `provodnik:` в YAML.
+CONFIG_SCHEMA = vol.Schema({vol.Optional(DOMAIN): vol.Any(None, {})}, extra=vol.ALLOW_EXTRA)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -137,6 +145,7 @@ async def async_setup(hass: HomeAssistant, config: dict[str, Any]) -> bool:
     """Загрузить компонент и зарегистрировать WebSocket-команды."""
     hass.data[DOMAIN] = ProvodnikStore(hass)
     await hass.data[DOMAIN].async_load()
+    await async_setup_publications(hass)
 
     websocket_api.async_register_command(
         hass, WS_GET_CORE, _handle_get_core, _schema(WS_GET_CORE)
@@ -159,4 +168,13 @@ async def async_setup(hass: HomeAssistant, config: dict[str, Any]) -> bool:
     websocket_api.async_register_command(
         hass, WS_DELETE_PART, _handle_delete_part, _schema(WS_DELETE_PART, name=str)
     )
+    return True
+
+
+async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
+    """Всё регистрируется в async_setup; запись нужна для установки из интерфейса."""
+    return True
+
+
+async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     return True

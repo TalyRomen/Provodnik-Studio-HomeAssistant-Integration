@@ -1,7 +1,8 @@
 """Публикации дашбордов из Provodnik Studio.
 
     POST /api/provodnik/publish/<slug>   загрузка сборки (только администратор)
-    GET  /provodnik/<slug>/…             активная версия (без авторизации, как /local)
+    GET  /provodnik/<slug>/…             активная версия (без авторизации, как /local);
+                                         адрес экрана без расширения → index.html
 
 WebSocket:
     provodnik/publications/list          список публикаций и версий (администратор)
@@ -148,6 +149,13 @@ class ServeView(HomeAssistantView):
         target = await request.app["hass"].async_add_executor_job(
             publish.resolve, self.registry.root, slug, version, path
         )
+        # Адрес экрана (/provodnik/dom/kukhnya/) — не файл: отдаём index.html,
+        # дашборд сам откроет экран по адресу. Путь с расширением — только файл.
+        last = path.rstrip("/").rsplit("/", 1)[-1]
+        if target is None and path and "." not in last:
+            target = await request.app["hass"].async_add_executor_job(
+                publish.resolve, self.registry.root, slug, version, "index.html"
+            )
         if target is None:
             raise web.HTTPNotFound()
         return web.FileResponse(target, headers={"Cache-Control": "no-cache"})

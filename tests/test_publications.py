@@ -44,6 +44,10 @@ async def test_publish_and_serve(hass, setup, hass_client, hass_client_no_auth):
     assert (await (await anon.get("/provodnik/sonoff/img/a.png")).read()) == b"PNG"
     r = await anon.get("/provodnik/sonoff", allow_redirects=False)
     assert r.status == 302 and r.headers["Location"] == "/provodnik/sonoff/"
+    # Адрес экрана — тот же дашборд; файлы с расширением по-прежнему только настоящие.
+    for screen in ("/provodnik/sonoff/kukhnya/", "/provodnik/sonoff/kukhnya"):
+        r = await anon.get(screen)
+        assert r.status == 200 and await r.text() == "<p>v1</p>", screen
     for bad in ("/provodnik/sonoff/../../secrets.yaml", "/provodnik/sonoff/%2e%2e/x", "/provodnik/nope/", "/provodnik/sonoff/missing.js"):
         assert (await anon.get(bad)).status == 404, bad
     assert (Path(hass.config.path(DOMAIN)) / "sonoff" / body["version"] / "index.html").is_file()
